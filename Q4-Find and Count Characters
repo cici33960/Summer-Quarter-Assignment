@@ -1,0 +1,45 @@
+"""
+Write a function to decompose a DNA strand into its 4 nucleotide bases: A, T, C, G. Your function will warn whenever an illegal character is found and at what position. Use loops and if-else statements to solve this rather than using string.count() or regular expressions. Call your function from the main scope of your python program.
+Your function shall have the name “decompose” and accept one string argument, it will perform like this:
+decompose("CTATCGzGCACCCTTTCAG CA")
+WARNING: Found illegal character ‘z’ at position 6
+WARNING: Found illegal character ‘ ’ at position 19
+{'A': 4, 'C': 8, 'T': 5, 'G': 3, ‘Other’: 2}
+"""
+
+arg=raw_input('Please write your DNA string:')
+
+def decompose(arg):
+    a = 0
+    t = 0
+    c = 0
+    g = 0
+    o = 0
+    #dict1={'A':a, 'T':t, 'C':c, 'G':g, 'other':o}
+    dict1={}
+    for i in range(0,len(arg)):
+        if arg[i] == 'A':
+            a += 1
+        elif arg[i] == 'T':
+            t += 1
+        elif arg[i] == 'C':
+            c += 1
+        elif arg[i] == 'G':
+            g += 1
+        else:
+            o += 1
+            print "WARNING: Found illegal character '"+arg[i]+"' at position",i
+            #print "WARNING: Found illegal character '%s' at position '%s'" % (arg[i], i)
+        
+        dict1['A']=a
+        dict1['C']=c
+        dict1['T']=t
+        dict1['G']=g
+	      dict1['Other']=o
+       
+    print dict1
+        
+decompose(arg)
+
+#arg="CTATCGzGCACCCTTTCAG CA"
+#decompose(arg)
