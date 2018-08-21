@@ -1,0 +1,126 @@
+Question 1:
+
+a) create a directory called work
+elena@elena-VirtualBox:~$ mkdir work
+
+b) change current directory to your newly created work directory
+elena@elena-VirtualBox:~$ cd work/
+
+elena@elena-VirtualBox:~/work$ git clone https://github.com/professormarek/Data_Science_1.git
+Cloning into 'Data_Science_1'...
+remote: Counting objects: 9, done.
+remote: Total 9 (delta 0), reused 0 (delta 0), pack-reused 9
+Unpacking objects: 100% (9/9), done.
+
+d) create a directory “data”
+elena@elena-VirtualBox:~/work$ mkdir data
+elena@elena-VirtualBox:~/work$ cd Data_Science_1/
+
+e) extract contents of the tar.gz file contained in the repository into the “data” directory you created in the previous step.
+elena@elena-VirtualBox:~/work/Data_Science_1$ tar -xvf a1.tar.gz -C ~/work/data
+a1_dataset.dat
+unstructured.txt
+
+f) make a copy of the data directory called data_backup
+elena@elena-VirtualBox:~/work/Data_Science_1$ cd ..
+elena@elena-VirtualBox:~/work$ cp -r data/ data_backup
+
+g) Determine the number of records/rows, words, and bytes in the a1_dataset.dat file.
+elena@elena-VirtualBox:~/work/data$ wc a1_dataset.dat 
+  4679  11746 286245 a1_dataset.dat
+
+h) Display only the first few lines of the a1_dataset.dat file. 
+What is the delimiter (character) used to separate each field, or column in the data?
+elena@elena-VirtualBox:~/work/data$ head -5 a1_dataset.dat 
+UserID;Gender;Age;Marital_Status;Current_Plan;Payment_Method;Contract_Length;Has_Kids;Other_Services_Bundled;Adopter_Class
+44793;F;47;Married;PrePaid;Non-Automatic;No Contract;N;Y;Very Early
+41648;M;60;Single;Heavy;Non-Automatic;36 Months;Y;N;Very Late
+33568;M;55;Married;PrePaid;Non-Automatic;No Contract;Y;N;Early
+22041;M;62;Married;PrePaid;Non-Automatic;No Contract;Y;Y;Late
+[dlm=;]
+
+i) Sort the contents of a1_dataset.dat numerically by age in a pipeline to view the first records (lowest age). 
+Identify any outliers (you can do this with your human-analyst intuition). 
+What should you do about these? Repeat for the last records in the sorted file. 
+Do you see any outliers? What should you do about these?
+
+elena@elena-VirtualBox:~/work/data$ sort -t";" -k 3n a1_dataset.dat |head
+33249;M;;Married;PrePaid;Non-Automatic;No Contract;N;Y;Very Late
+UserID;Gender;Age;Marital_Status;Current_Plan;Payment_Method;Contract_Length;Has_Kids;Other_Services_Bundled;Adopter_Class
+UserID;Gender;Age;Marital_Status;Current_Plan;Payment_Method;Contract_Length;Has_Kids;Other_Services_Bundled;Adopter_Class
+UserID;Gender;Age;Marital_Status;Current_Plan;Payment_Method;Contract_Length;Has_Kids;Other_Services_Bundled;Adopter_Class
+UserID;Gender;Age;Marital_Status;Current_Plan;Payment_Method;Contract_Length;Has_Kids;Other_Services_Bundled;Adopter_Class
+UserID;Gender;Age;Marital_Status;Current_Plan;Payment_Method;Contract_Length;Has_Kids;Other_Services_Bundled;Adopter_Class
+40477;F;1;Single;Low;Automatic;12 Months;Y;N;Very Late
+10044;F;18;Single;Low;Automatic;12 Months;N;N;Late
+10368;F;18;Married;Heavy;Non-Automatic;36 Months;N;N;Very Early
+10737;F;18;Married;Medium;Automatic;12 Months;N;Y;Very Early
+
+
+elena@elena-VirtualBox:~/work/data$ sort -t";" -k 3n a1_dataset.dat |tail -3
+48693;M;64;Married;Low;Automatic;24 months;N;N;Very Late
+49202;F;64;Single;Medium;Non-Automatic;12 Months;N;N;Very Late
+25016;M;25016;Single;Low;Non-Automatic;12 Months;Y;N;Late
+
+There are some invalid data: 
+1. There is no AGE information for the first line of sorted data (#33249)
+2. the AGE information for the last line of sorted data (#25016) is invalid
+3. Looks like #40477 has a typo in the AGE.
+These invalid data should be modified or deleted. 
+
+j) Does the heading (column labels) in a1_dataset.dat get repeated? How many times?
+elena@elena-VirtualBox:~/work/data$ grep -c "UserID" a1_dataset.dat 
+5
+
+k) Remove any heading rows (rows that do not begin with a numerical value) from a1_dataset.dat and count the number of lines in the resulting output. 
+How many records are left after heading rows are removed (do not print out your output, only answer how many records remain).
+elena@elena-VirtualBox:~/work/data$ cat a1_dataset.dat | grep -v "UserID" |wc -l
+4674
+
+l) Count the number of duplicate records in a1_dataset.dat (after all heading rows are removed). 
+How many duplicate records are there?
+elena@elena-VirtualBox:~/work/data$ sort a1_dataset.dat | grep -v "UserID" | uniq -dc
+      2 20388;F;36;Single;Low;Automatic;24 months;N;N;Late
+      2 25384;F;32;Single;PrePaid;Non-Automatic;No Contract;N;Y;Early
+      2 32713;F;63;Single;Medium;Non-Automatic;24 months;N;N;Very Late
+      2 42923;F;27;Single;Heavy;Non-Automatic;No Contract;N;Y;Very Early
+
+m) Sort the a1_dataset.dat file and remove duplicate records, how many duplicate records (not counting heading rows) are there? 
+(Clarification: you may answer this by stating how many records remain after duplicate records are removed.)
+elena@elena-VirtualBox:~/work/data$ sort a1_dataset.dat | grep -v "UserID" | uniq | wc
+   4670   11731  285380
+
+n)Count the number of records in a1_dataset.dat with missing data. How many records have missing data?
+elena@elena-VirtualBox:~/work/data$ grep -c ";;" a1_dataset.dat
+8
+elena@elena-VirtualBox:~/work/data$ grep -c "^.;" a1_dataset.dat 
+0
+elena@elena-VirtualBox:~/work/data$ grep -c ";.$" a1_dataset.dat 
+1
+
+
+o)Remove any records in a1_dataset.dat with missing data, and count the new number of records with these records (rows) removed.
+elena@elena-VirtualBox:~/work/data$ grep -v ";;" a1_dataset.dat| grep -v ";.$" |wc -l
+4670
+
+
+p)Use change the contents of a1_dataset.dat to use “,” as a field delimiter (column separator) view the results using “less”. 
+elena@elena-VirtualBox:~/work/data$ grep ";" a1_dataset.dat | tr ";" "," | less
+
+q)Create a unix pipeline that when executed will (all in one line): 
+i) Remove any heading rows, 
+ii) Sort the a1_dataset.dat file and remove duplicate records, 
+iii) Remove any records in a1_dataset.dat with missing data, 
+iv) change the contents of a1_dataset.dat to use “,” as a field delimiter, and 
+v) save the result as training_set.csv 
+elena@elena-VirtualBox:~/work/data$ grep -v "UserID" a1_dataset.dat | sort | uniq | grep -v ";;" | grep -v ";,$" | tr ";" "," |grep -v -e "@.*" > training_set.csv
+
+
+r) Compress the work directory where you were working as cleaned_data.tar.gz
+elena@elena-VirtualBox:~/work/data$ tar cvfz cleaned_data.tar.gz ~/work/data
+tar: Removing leading `/' from member names
+/home/elena/work/data/
+/home/elena/work/data/training_set.csv
+/home/elena/work/data/unstructured.txt
+/home/elena/work/data/a1_dataset.dat
+tar: /home/elena/work/data: file changed as we read it
