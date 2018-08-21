@@ -1,0 +1,41 @@
+'''
+Create a python script that creates a histogram (frequency count) of all characters read in from standard input until end of file is detected. 
+Do not use any module or library for this problem. You can solve it with the clever use of dictionaries.
+Optional (2 Bonus Marks): use matplotlib to create a bar-chart instead of displaying the answer numerically.
+Optional (2 Bonus Marks): use optparser to inspect the command line arguments supplied by the user. 
+If the user provides the option -f followed by the filename your program will read from the specified file instead of standard input.
+'''
+
+import sys
+import optparse
+import matplotlib.pyplot as plt
+
+def count(string):
+	my_dict={}
+	for line in string:
+		line = line.strip()
+		for i in line:
+			if i not in my_dict:
+				my_dict[i] = 1
+			else:
+        			my_dict[i] += 1
+    	print my_dict
+
+	x=my_dict.keys()
+	y=my_dict.values()
+
+	plt.bar(range(len(x)),y)
+	plt.ylabel('Number of Times')
+	plt.xticks(range(len(x)),x)
+	plt.show()
+
+parser = optparse.OptionParser()
+parser.add_option('-f', '--filename', dest="filename", help="-f for details", default=False)
+
+(options, others) = parser.parse_args()
+
+if options.filename is False:
+	count(sys.stdin)
+else:
+	string=open(options.filename)
+	count(string)
