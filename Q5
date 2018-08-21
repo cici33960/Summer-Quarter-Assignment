@@ -1,0 +1,39 @@
+#!/usr/bin/env python2
+# -*- coding: utf-8 -*-
+"""
+Created on Thu May 31 22:12:26 2018
+
+@author: elenaxu
+"""
+#G(n)=(n-1)! for a positive integer n
+#Beta(x,alpha,beta)=G(alpha+beta) * x^(alpha-1) * (1-x)^(beta-1) / G(alpha) / G(beta)
+
+#Beta = raw_input("x=%s  alpha=%s beta=%s") % (x,alpha,beta)
+
+x = []
+for i in range(1,1000):
+    x.append(i/1000.0)
+
+    
+def Beta(x,alpha,beta):
+    
+    def G(n):
+        if n > 1:
+            return (n-1) * G(n-1)
+        else:
+            return 1
+
+    y=[]
+    for i in range(len(x)):
+        b = G(alpha+beta) * x[i]**(alpha-1) * (1-x[i])**(beta-1) / (G(alpha) * G(beta) )
+        y.append(b)
+    return y
+        
+
+y=Beta(x,3,3)
+
+import matplotlib.pyplot as plt
+#plt.scatter(x, y, color= 'black')
+plt.plot (x, y, color='blue', linewidth=1)
+plt.show()
+
