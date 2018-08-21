@@ -1,9 +1,19 @@
-#!/usr/bin/env python2
-# -*- coding: utf-8 -*-
-"""
-Created on Thu May 31 22:12:26 2018
 
-@author: elenaxu
+"""
+Create and use a user-defined Beta function. You must write your own python function to implement the Beta function as below. 
+Do not use any existing library implementation of this function.
+Use your Beta function make a xy-plot using matplotlib, where x is a vector of 100 equidistant points from 0.001 to 0.999, 
+and y is the corresponding Beta density function Beta(x;3,3).
+
+Hint 1: Your beta function should accept 3 floating point values. 
+The alpha and beta should be scalar (only one value) but you could consider the case where x is an individual (singular) value 
+OR a many-valued vector implemented as a python array or list. In the case that you choose to implement Beta such that it expects a singular x argument, 
+then it should also return a singular value. In the case that you choose to implement a Beta function that expects a vector (many-valued) x argument, 
+it should also return an ordered list representing the resulting vector of Beta(x,alpha,beta).
+
+Hint 2: Python reads 3 as an integer, and 3.0 as a real(float) number. Try to compute 3/2, 3.0/2 and 3*1.0/2 in the iPython shell. 
+Make sure you use real number division, not the integer number division in your implementation.
+
 """
 #G(n)=(n-1)! for a positive integer n
 #Beta(x,alpha,beta)=G(alpha+beta) * x^(alpha-1) * (1-x)^(beta-1) / G(alpha) / G(beta)
