@@ -1,3 +1,7 @@
+'''
+Train a Decision Tree Classifier to predict the “Very Late Adopter” class using the customer dataset from Q1-a1_dataset.dat
+'''
+
 import sys
 import optparse
 import numpy as np
@@ -135,7 +139,6 @@ accuracy=float(correct)/(correct+incorrect)
 #print correct, incorrect, accuracy (333,134,0.700)
 
 
-
 #Q2b-prune the target
 if options.verb == True:
 		#count the 0s and 1s in target (0:3535, 1:1127)
@@ -205,6 +208,3 @@ for a in max_depth:
 	plt.ylabel('accuracy')
 	plt.title('max leaf nodes vs accuracy')
 	plt.show()
-
-
-
