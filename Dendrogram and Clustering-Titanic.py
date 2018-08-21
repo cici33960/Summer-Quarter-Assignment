@@ -1,11 +1,3 @@
-#!/usr/bin/env python2
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Aug  2 20:46:54 2018
-
-@author: elenaxu
-"""
-
 import json
 import random
 from scipy.cluster.hierarchy import dendrogram, linkage
