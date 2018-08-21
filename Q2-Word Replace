@@ -1,0 +1,38 @@
+Many text analysis tools, cannot handle ASCII encoded unicode text, especially somewhat older tools. 
+Create a python script that reads from standard input, one line at a time, 
+and removes any unicode characters encoded using the format \uXXXX where each X can be a hexadecimal digit {0123456789ABCDEF}. 
+Your program should also remove any unicode characters encoded using \xXX where again XX are hexadecimal digits 
+(this time two instead of four). Your program (filter_unicode.py) should work in a UNIX bash pipeline as follows:
+$ cat unstructured.txt
+I everyone would like \u0024100,000
+But what about the 10\x3a00\x3a00 time?
+$ cat unstructured.txt | ./filter_unicode.py > filtered.txt
+$ cat filtered.txt
+I everyone would like 100,000
+But what about the 100000 time?
+$
+
+
+
+import sys
+
+def hexa(c):
+	hexa = {'a','b','c','d','e','f','A','B','C','D','E','F','0','1','2','3','4','5','6','7','8','9'}
+	if set(c).issubset(hexa):
+		return True
+	else:
+		return False
+
+for line in sys.stdin:
+	line=line.strip()
+	for i in range(0,len(line)):
+		if line[i:i+2] == '\\u': #and hexa(line[i+2:i+6]): #may add the def func
+			line=line[:i] + line[i+6:]
+			#line_1=line.replace(line[i:i+6], '')
+		
+		elif line[i:i+2] == '\\x': #and hexa(line[i+2:i+4]): #may add the def func
+			line=line[:i] + line[i+4:]
+			#line_2=line.replace(line[i:i+4], '')
+
+	print line
+	#have to print line HERE under the first for loop, in order to print both line!
