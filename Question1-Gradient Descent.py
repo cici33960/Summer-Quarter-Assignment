@@ -1,9 +1,5 @@
-#!/usr/bin/env python2
-# -*- coding: utf-8 -*-
 """
-Created on Thu Jun 28 10:26:37 2018
-
-@author: elenaxu
+Import and use the Boston housing dataset to fit a linear regression model using Gradient Descent.
 """
 import matplotlib.pyplot as plt
 import numpy as np
@@ -110,6 +106,4 @@ for a in learning_rate:
     plt.title('Epoch vs RMSE')
     plt.ylabel('Error')
     plt.show() 
-
-    
     
